@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="UA9-Nj-b8A">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Трекеры-->
+        <scene sceneID="IMT-7b-MaJ">
+            <objects>
+                <navigationController id="KGR-bB-MxG" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Трекеры" image="nav-trackers" id="33V-1x-Fs2"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Yvk-Ra-S4X">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="YSu-wb-cG9" kind="relationship" relationship="rootViewController" id="L1a-p5-xMi"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LVp-F3-nm4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-408" y="296"/>
+        </scene>
+        <!--Trackers View Controller-->
+        <scene sceneID="cEc-1Y-nz7">
+            <objects>
+                <collectionViewController id="YSu-wb-cG9" customClass="TrackersViewController" customModule="Tracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Wug-d5-qmW">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="f2T-UJ-zVB">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="YSu-wb-cG9" id="SzI-s0-Cuu"/>
+                            <outlet property="delegate" destination="YSu-wb-cG9" id="zVo-Q3-PVd"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="UuT-V2-9S2"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vjV-OK-7rs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="421" y="296"/>
+        </scene>
+        <!--Статистика-->
+        <scene sceneID="r4l-km-Xyw">
+            <objects>
+                <viewController id="aJa-Jp-GSL" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="q97-1I-NhY">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="qzY-Ty-huV"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Статистика" image="nav-statistic" id="y7j-HP-6zL"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2tT-Zl-gLy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-408" y="-679"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="PAF-3x-ksF">
+            <objects>
+                <tabBarController id="UA9-Nj-b8A" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="KrF-f5-kaQ">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="KGR-bB-MxG" kind="relationship" relationship="viewControllers" id="e50-ps-9dl"/>
+                        <segue destination="aJa-Jp-GSL" kind="relationship" relationship="viewControllers" id="jTR-e2-tBn"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tXq-Rp-wlj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1079" y="-226"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="nav-statistic" width="28" height="28"/>
+        <image name="nav-trackers" width="28" height="28"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
