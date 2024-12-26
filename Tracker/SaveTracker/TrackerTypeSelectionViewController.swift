@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TrackerTypeSelectionViewController: UIViewController {
+final class TrackerTypeSelectionViewController: UIViewController {
     
     weak var trackersViewController: TrackersViewController?
     

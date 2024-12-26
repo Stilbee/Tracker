@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TrackerCategoryViewController: UIViewController {
+final class TrackerCategoryViewController: UIViewController {
     
     private var applyButton = PrimaryButton(title: "Добавить категорию")
     

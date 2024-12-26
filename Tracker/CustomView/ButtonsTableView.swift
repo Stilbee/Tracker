@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ButtonsTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
+final class ButtonsTableView: UITableView {
     
     private var items: [TableButtonItem]
     
@@ -33,18 +33,20 @@ class ButtonsTableView: UITableView, UITableViewDelegate, UITableViewDataSource 
         self.separatorStyle = .none
     }
     
-    // MARK: - TableView DataSource
+    func updateSubtitle(index: Int, subtitle: String) {
+        items[index].subtitle = subtitle
+        reloadData()
+    }
+}
+
+// MARK: UITableViewDataSource
+extension ButtonsTableView: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
-    }
-    
-    func updateSubtitle(index: Int, subtitle: String) {
-        items[index].subtitle = subtitle
-        reloadData()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -60,8 +62,12 @@ class ButtonsTableView: UITableView, UITableViewDelegate, UITableViewDataSource 
         
         return cell
     }
+}
+
+
+// MARK: UITableViewDelegate
+extension ButtonsTableView: UITableViewDelegate {
     
-    // MARK: - TableView Delegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         onItemSelected?(indexPath.row)
@@ -94,9 +100,4 @@ class ButtonsTableView: UITableView, UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0
     }
-}
-
-struct TableButtonItem {
-    var title: String
-    var subtitle: String?
 }

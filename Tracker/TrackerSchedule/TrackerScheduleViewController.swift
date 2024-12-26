@@ -11,7 +11,7 @@ protocol TrackerScheduleDelegate {
     func save(weekDays: Set<DayOfWeek>)
 }
 
-class TrackerScheduleViewController: UIViewController {
+final class TrackerScheduleViewController: UIViewController {
     
     var delegate: TrackerScheduleDelegate?
     

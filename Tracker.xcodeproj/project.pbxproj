@@ -6,23 +6,8 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		9BA21A0D2D1332DD00C1FDAA /* TrackerRecordCoreData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA21A0C2D1332DD00C1FDAA /* TrackerRecordCoreData+CoreDataProperties.swift */; };
-		9BA21A0E2D1332DD00C1FDAA /* TrackerCategoryCoreData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA21A082D1332DD00C1FDAA /* TrackerCategoryCoreData+CoreDataProperties.swift */; };
-		9BA21A0F2D1332DD00C1FDAA /* TrackerCategoryCoreData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA21A072D1332DD00C1FDAA /* TrackerCategoryCoreData+CoreDataClass.swift */; };
-		9BA21A102D1332DD00C1FDAA /* TrackerRecordCoreData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA21A0B2D1332DD00C1FDAA /* TrackerRecordCoreData+CoreDataClass.swift */; };
-		9BA21A112D1332DD00C1FDAA /* TrackerCoreData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA21A092D1332DD00C1FDAA /* TrackerCoreData+CoreDataClass.swift */; };
-		9BA21A122D1332DD00C1FDAA /* TrackerCoreData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA21A0A2D1332DD00C1FDAA /* TrackerCoreData+CoreDataProperties.swift */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
 		9B27B2452D0821D30083289D /* Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9BA21A072D1332DD00C1FDAA /* TrackerCategoryCoreData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TrackerCategoryCoreData+CoreDataClass.swift"; path = "Tracker/CoreDate/TrackerCategoryCoreData+CoreDataClass.swift"; sourceTree = "<group>"; };
-		9BA21A082D1332DD00C1FDAA /* TrackerCategoryCoreData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TrackerCategoryCoreData+CoreDataProperties.swift"; path = "Tracker/CoreDate/TrackerCategoryCoreData+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		9BA21A092D1332DD00C1FDAA /* TrackerCoreData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TrackerCoreData+CoreDataClass.swift"; path = "Tracker/CoreDate/TrackerCoreData+CoreDataClass.swift"; sourceTree = "<group>"; };
-		9BA21A0A2D1332DD00C1FDAA /* TrackerCoreData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TrackerCoreData+CoreDataProperties.swift"; path = "Tracker/CoreDate/TrackerCoreData+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		9BA21A0B2D1332DD00C1FDAA /* TrackerRecordCoreData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TrackerRecordCoreData+CoreDataClass.swift"; path = "Tracker/CoreDate/TrackerRecordCoreData+CoreDataClass.swift"; sourceTree = "<group>"; };
-		9BA21A0C2D1332DD00C1FDAA /* TrackerRecordCoreData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TrackerRecordCoreData+CoreDataProperties.swift"; path = "Tracker/CoreDate/TrackerRecordCoreData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -60,12 +45,6 @@
 		9B27B23C2D0821D30083289D = {
 			isa = PBXGroup;
 			children = (
-				9BA21A072D1332DD00C1FDAA /* TrackerCategoryCoreData+CoreDataClass.swift */,
-				9BA21A082D1332DD00C1FDAA /* TrackerCategoryCoreData+CoreDataProperties.swift */,
-				9BA21A092D1332DD00C1FDAA /* TrackerCoreData+CoreDataClass.swift */,
-				9BA21A0A2D1332DD00C1FDAA /* TrackerCoreData+CoreDataProperties.swift */,
-				9BA21A0B2D1332DD00C1FDAA /* TrackerRecordCoreData+CoreDataClass.swift */,
-				9BA21A0C2D1332DD00C1FDAA /* TrackerRecordCoreData+CoreDataProperties.swift */,
 				9B27B2472D0821D30083289D /* Tracker */,
 				9B27B2462D0821D30083289D /* Products */,
 			);
@@ -153,12 +132,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9BA21A0D2D1332DD00C1FDAA /* TrackerRecordCoreData+CoreDataProperties.swift in Sources */,
-				9BA21A0E2D1332DD00C1FDAA /* TrackerCategoryCoreData+CoreDataProperties.swift in Sources */,
-				9BA21A0F2D1332DD00C1FDAA /* TrackerCategoryCoreData+CoreDataClass.swift in Sources */,
-				9BA21A102D1332DD00C1FDAA /* TrackerRecordCoreData+CoreDataClass.swift in Sources */,
-				9BA21A112D1332DD00C1FDAA /* TrackerCoreData+CoreDataClass.swift in Sources */,
-				9BA21A122D1332DD00C1FDAA /* TrackerCoreData+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

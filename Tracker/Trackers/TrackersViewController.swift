@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class TrackersViewController: UICollectionViewController, UISearchResultsUpdating {
+final class TrackersViewController: UICollectionViewController, UISearchResultsUpdating {
     
     private var trackerStore = TrackerStore()
     private let trackerCategoryStore = TrackerCategoryStore()

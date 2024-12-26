@@ -30,6 +30,7 @@ final class AddTrackerCategoryViewController: UIViewController {
         categoryNameField.addTarget(self, action: #selector(nameDidChange(_:)), for: .editingChanged)
         categoryNameField.translatesAutoresizingMaskIntoConstraints = false
         categoryNameField.delegate = self
+        categoryNameField.returnKeyType = .done
         view.addSubview(categoryNameField)
     
         doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)

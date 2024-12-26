@@ -9,5 +9,4 @@ import Foundation
 
 enum TrackerError: Error {
     case defaultError
-    
 }

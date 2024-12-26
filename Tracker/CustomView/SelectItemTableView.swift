@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SelectItemTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
+final class SelectItemTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     private var items: [String]
     

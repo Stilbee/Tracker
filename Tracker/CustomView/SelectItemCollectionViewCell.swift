@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SelectItemCollectionViewCell: UICollectionViewCell {
+final class SelectItemCollectionViewCell: UICollectionViewCell {
     
     private let colorItemSelectedView = UIView()
     private let colorItemView = UIView()

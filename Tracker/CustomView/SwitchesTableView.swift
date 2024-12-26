@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SwitchesTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
+final class SwitchesTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
 
     private let items: [String]
 

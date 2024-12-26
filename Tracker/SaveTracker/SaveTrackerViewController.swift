@@ -14,7 +14,7 @@ protocol SaveTrackerViewControllerDelegate {
     func reload()
 }
 
-class SaveTrackerViewController: UIViewController {
+final class SaveTrackerViewController: UIViewController {
     private let emojis = ["🙂","😻","🌺","🐶","❤️","😱","😇","😡","🥶","🤔","🙌","🍔","🥦","🏓","🥇","🎸","🏝","😪"]
     private let colors: [UIColor] =
     [.trackerColor1, .trackerColor2, .trackerColor3, .trackerColor4, .trackerColor5, .trackerColor6, .trackerColor7, .trackerColor8, .trackerColor9, .trackerColor10, .trackerColor11, .trackerColor12, .trackerColor13, .trackerColor14, .trackerColor15, .trackerColor16, .trackerColor17, .trackerColor18]
@@ -64,6 +64,8 @@ class SaveTrackerViewController: UIViewController {
         
         nameTextField.addTarget(self, action: #selector(nameDidChange(_:)), for: .editingChanged)
         nameTextField.translatesAutoresizingMaskIntoConstraints = false
+        nameTextField.delegate = self
+        nameTextField.returnKeyType = .done
         scrollView.addSubview(nameTextField)
         
         nameMaxLengthErrorLabel.text = "Ограничение 38 символов"
@@ -248,5 +250,12 @@ extension SaveTrackerViewController: TrackerScheduleDelegate {
         }
         
         buttonsTableView?.updateSubtitle(index: 1, subtitle: subtitle)
+    }
+}
+
+extension SaveTrackerViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
