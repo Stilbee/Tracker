@@ -105,11 +105,7 @@ final class TrackerCell: UICollectionViewCell {
         daysLabel.text = format(days: days)
         
         plusButton.backgroundColor = tracker.color
-        if (isDone) {
-            plusButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
-        } else {
-            plusButton.setImage(UIImage(systemName: "plus"), for: .normal)
-        }
+        plusButton.setImage(UIImage(systemName: isDone ? "checkmark" : "plus"), for: .normal)
     }
     
     private func format(days: Int) -> String {

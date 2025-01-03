@@ -5,9 +5,6 @@
 //  Created by Alibi Mailan
 //
 
-
-import CoreData
-
 final class TrackerCategoryViewModel {
     
     static let shared = TrackerCategoryViewModel()
@@ -16,7 +13,7 @@ final class TrackerCategoryViewModel {
     private(set) var selectedCategory: TrackerCategory?
     var onSelectCategory: ((TrackerCategory) -> Void)? = nil
     
-    init() {
+    private init() {
         categoryStore.delegate = self
         self.categories = categoryStore.trackerCategories
     }
