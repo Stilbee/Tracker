@@ -45,7 +45,9 @@ final class SelectItemCollectionView: UICollectionView, UICollectionViewDelegate
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SelectItemCell", for: indexPath) as! SelectItemCollectionViewCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SelectItemCell", for: indexPath) as? SelectItemCollectionViewCell else {
+            return SelectItemCollectionViewCell()
+        }
         
         if let color = items[indexPath.item] as? UIColor {
             cell.configureWithColor(color, isSelected: indexPath.item == selectedIndex)

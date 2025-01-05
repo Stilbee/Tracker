@@ -25,7 +25,7 @@ final class SaveTrackerViewController: UIViewController {
     private let trackerCategoryViewController = TrackerCategoryViewController()
     private(set) var viewModel = TrackerCategoryViewModel.shared
     private var updatedTracker: Tracker?
-    private var buttonsTableView: ButtonsTableView?
+    private var buttonsTableView = ButtonsTableView(items: [])
     
     private var selectedColorIndex: Int?
     private var selectedEmojiIndex: Int?
@@ -75,13 +75,13 @@ final class SaveTrackerViewController: UIViewController {
         nameMaxLengthErrorLabel.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(nameMaxLengthErrorLabel)
         
-        buttonsTableView?.onItemSelected = { [weak self] selectedIndex in
+        buttonsTableView.onItemSelected = { [weak self] selectedIndex in
             guard let self = self else {
                 return
             }
             if (selectedIndex == 0) {
                 self.trackerCategoryViewController.viewModel.onSelectCategory = { category in
-                    self.buttonsTableView?.updateSubtitle(index: selectedIndex, subtitle: category.name)
+                    self.buttonsTableView.updateSubtitle(index: selectedIndex, subtitle: category.name)
                 }
                 self.navigationController?.pushViewController(self.trackerCategoryViewController, animated: true)
             }
@@ -92,8 +92,8 @@ final class SaveTrackerViewController: UIViewController {
             }
         }
         
-        buttonsTableView?.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(buttonsTableView!)
+        buttonsTableView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(buttonsTableView)
         
         let emojisLabel = sectionTitleLabel("Emoji")
         
@@ -147,12 +147,12 @@ final class SaveTrackerViewController: UIViewController {
             nameMaxLengthErrorLabel.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor),
             nameMaxLengthErrorLabelHideConstraint,
             
-            buttonsTableView!.topAnchor.constraint(equalTo: nameMaxLengthErrorLabel.bottomAnchor, constant: 24),
-            buttonsTableView!.leadingAnchor.constraint(equalTo: mainLayout.leadingAnchor, constant: 16),
-            buttonsTableView!.trailingAnchor.constraint(equalTo: mainLayout.trailingAnchor, constant: -16),
-            buttonsTableView!.heightAnchor.constraint(equalToConstant: isRegular ? 150 : 75),
+            buttonsTableView.topAnchor.constraint(equalTo: nameMaxLengthErrorLabel.bottomAnchor, constant: 24),
+            buttonsTableView.leadingAnchor.constraint(equalTo: mainLayout.leadingAnchor, constant: 16),
+            buttonsTableView.trailingAnchor.constraint(equalTo: mainLayout.trailingAnchor, constant: -16),
+            buttonsTableView.heightAnchor.constraint(equalToConstant: isRegular ? 150 : 75),
             
-            emojisLabel.topAnchor.constraint(equalTo: buttonsTableView!.bottomAnchor, constant: 32),
+            emojisLabel.topAnchor.constraint(equalTo: buttonsTableView.bottomAnchor, constant: 32),
             emojisLabel.leadingAnchor.constraint(equalTo: mainLayout.leadingAnchor, constant: 28),
             emojisLabel.trailingAnchor.constraint(equalTo: mainLayout.trailingAnchor, constant: -28),
             
@@ -249,7 +249,7 @@ extension SaveTrackerViewController: TrackerScheduleDelegate {
             }
         }
         
-        buttonsTableView?.updateSubtitle(index: 1, subtitle: subtitle)
+        buttonsTableView.updateSubtitle(index: 1, subtitle: subtitle)
     }
 }
 
