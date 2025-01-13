@@ -164,7 +164,9 @@ final class TrackersViewController: UICollectionViewController, UISearchResultsU
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCell.identifier, for: indexPath) as! TrackerCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCell.identifier, for: indexPath) as? TrackerCell else {
+            return TrackerCell()
+        }
         let tracker = visibleCategories[indexPath.section].trackers[indexPath.item]
         let isCompletedToday = isTrackerCompletedToday(id: tracker.id)
         let completedDays = completedTrackers.filter {
@@ -258,17 +260,17 @@ extension TrackersViewController: SaveTrackerViewControllerDelegate {
     func appendTracker(tracker: Tracker, category: String?) {
         guard let category = category else { return }
         self.trackerStore.addNewTracker(tracker)
-        let foundCategory = self.categories.first { ctgry in
-            ctgry.name == category
+        let foundCategory = self.categories.first { categoryLoop in
+            categoryLoop.name == category
         }
         if foundCategory != nil {
-            self.categories = self.categories.map { ctgry in
-                if (ctgry.name == category) {
-                    var updatedTrackers = ctgry.trackers
+            self.categories = self.categories.map { categoryLoop in
+                if (categoryLoop.name == category) {
+                    var updatedTrackers = categoryLoop.trackers
                     updatedTrackers.append(tracker)
-                    return TrackerCategory(name: ctgry.name, trackers: updatedTrackers)
+                    return TrackerCategory(name: categoryLoop.name, trackers: updatedTrackers)
                 } else {
-                    return TrackerCategory(name: ctgry.name, trackers: ctgry.trackers)
+                    return TrackerCategory(name: categoryLoop.name, trackers: categoryLoop.trackers)
                 }
             }
         } else {
@@ -288,9 +290,9 @@ extension TrackersViewController: SaveTrackerViewControllerDelegate {
 
 extension TrackersViewController: TrackerStoreDelegate {
     func store() {
-        let fromDb = trackerStore.trackers
-        trackers = fromDb.filter { !$0.pinned }
-        pinnedTrackers = fromDb.filter { $0.pinned }
+        let fromDatabase = trackerStore.trackers
+        trackers = fromDatabase.filter { !$0.pinned }
+        pinnedTrackers = fromDatabase.filter { $0.pinned }
         filterVisibleCategories()
         collectionView.reloadData()
     }

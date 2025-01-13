@@ -28,7 +28,8 @@ final class TrackerCategoryViewController: UIViewController {
         navigationItem.title = "Категория"
         
         categoriesTableView = SelectItemTableView(items: viewModel.categories.map(\.self.name))
-        categoriesTableView?.onItemSelected = { [weak self] index in
+        guard let categoriesTableView = categoriesTableView else { return }
+        categoriesTableView.onItemSelected = { [weak self] index in
             guard let index = index else {
                 return
             }
@@ -37,8 +38,8 @@ final class TrackerCategoryViewController: UIViewController {
                 self?.navigationController?.popViewController(animated: true)
             }
         }
-        categoriesTableView?.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(categoriesTableView!)
+        categoriesTableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(categoriesTableView)
         
         emptyCategoryLogo.translatesAutoresizingMaskIntoConstraints = false
         emptyCategoryLogo.image = UIImage(named: "Empty trackers")
@@ -57,10 +58,10 @@ final class TrackerCategoryViewController: UIViewController {
         view.addSubview(applyButton)
         
         NSLayoutConstraint.activate([
-            categoriesTableView!.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
-            categoriesTableView!.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            categoriesTableView!.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            categoriesTableView!.bottomAnchor.constraint(equalTo: applyButton.topAnchor, constant: -24),
+            categoriesTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            categoriesTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            categoriesTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            categoriesTableView.bottomAnchor.constraint(equalTo: applyButton.topAnchor, constant: -24),
             emptyCategoryLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             emptyCategoryLogo.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 246),
             emptyCategoryLogo.heightAnchor.constraint(equalToConstant: 80),

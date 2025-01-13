@@ -43,7 +43,10 @@ final class SwitchesTableView: UITableView, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SwitchCell", for: indexPath) as! SwitchTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "SwitchCell", for: indexPath) as? SwitchTableViewCell else {
+            return SwitchTableViewCell(style: .default, reuseIdentifier: "SwitchCell")
+        }
+        
         cell.configure(with: items[indexPath.row], isOn: switchStates[indexPath.row])
         cell.backgroundColor = .ypBackground2
         cell.selectionStyle = .none
