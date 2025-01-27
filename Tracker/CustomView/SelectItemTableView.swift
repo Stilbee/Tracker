@@ -60,7 +60,7 @@ final class SelectItemTableView: UITableView, UITableViewDelegate, UITableViewDa
         } else {
             cell.accessoryType = .none
         }
-        cell.backgroundColor = .ypBackground2
+        cell.backgroundColor = .ypBackgroundGray
         
         let isLastCell = indexPath.row == items.count - 1
         if isLastCell {

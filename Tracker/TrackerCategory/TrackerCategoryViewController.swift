@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol TrackerCategoryDelegate: AnyObject {
+    func onSelect(category: TrackerCategory)
+}
+
 final class TrackerCategoryViewController: UIViewController {
+    
+    weak var delegate: TrackerCategoryDelegate?
     
     private var applyButton = PrimaryButton(title: "Добавить категорию")
     
@@ -23,17 +29,17 @@ final class TrackerCategoryViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .ypBackground
+        view.backgroundColor = .ypBackgroundLight
         navigationItem.hidesBackButton = true
         navigationItem.title = "Категория"
         
         categoriesTableView = SelectItemTableView(items: viewModel.categories.map(\.self.name))
         guard let categoriesTableView = categoriesTableView else { return }
         categoriesTableView.onItemSelected = { [weak self] index in
-            guard let index = index else {
+            guard let index = index, let category = self?.viewModel.categories[index] else {
                 return
             }
-            self?.viewModel.selectCategory(index)
+            self?.delegate?.onSelect(category: category)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                 self?.navigationController?.popViewController(animated: true)
             }

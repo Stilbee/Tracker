@@ -22,8 +22,8 @@ final class PrimaryButton: UIButton {
     }
     
     private func setupUI() {
-        setTitleColor(.white, for: .normal)
-        backgroundColor = UIColor.black
+        setTitleColor(.ypTextLight, for: .normal)
+        backgroundColor = .ypBackgroundDark
         layer.cornerRadius = 16
         titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         translatesAutoresizingMaskIntoConstraints = false

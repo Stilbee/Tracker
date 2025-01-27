@@ -15,10 +15,8 @@ final class OnboardingViewController: UIPageViewController {
         let pageControl = UIPageControl()
         pageControl.numberOfPages = pages.count
         pageControl.currentPage = 0
-        
-        pageControl.currentPageIndicatorTintColor = .ypText
-        pageControl.pageIndicatorTintColor = UIColor.ypText.withAlphaComponent(0.3)
-    
+        pageControl.currentPageIndicatorTintColor = .ypDark
+        pageControl.pageIndicatorTintColor = UIColor.ypDark.withAlphaComponent(0.3)
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         return pageControl
     }()
@@ -26,9 +24,9 @@ final class OnboardingViewController: UIPageViewController {
     private lazy var button: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Вот это технологии!", for: .normal)
-        button.backgroundColor = .ypText
+        button.backgroundColor = .ypDark
         button.layer.cornerRadius = 16
-        button.setTitleColor(.ypBackground, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return button
@@ -44,9 +42,7 @@ final class OnboardingViewController: UIPageViewController {
         setupConstraints()
     }
 }
-  
 
-// MARK: - UIPageViewControllerDataSource
 extension OnboardingViewController: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let viewControllerIndex = pages.firstIndex(of: viewController) else {
@@ -77,7 +73,6 @@ extension OnboardingViewController: UIPageViewControllerDataSource {
     }
 }
 
-// MARK: - UIPageViewControllerDelegate
 extension OnboardingViewController: UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         
@@ -87,8 +82,6 @@ extension OnboardingViewController: UIPageViewControllerDelegate {
         }
     }
 }
-
-// MARK: - Private Methods
  
 private extension OnboardingViewController {
     func setupOnboardingPages() {
@@ -151,7 +144,7 @@ private extension OnboardingViewController {
         label.text = labelText
         label.textAlignment = .center
         label.numberOfLines = 2
-        label.textColor = .ypText
+        label.textColor = .ypDark
         label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         onboardingVC.view.addSubview(label)

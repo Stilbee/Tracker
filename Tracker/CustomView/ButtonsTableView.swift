@@ -29,7 +29,7 @@ final class ButtonsTableView: UITableView {
         self.register(UITableViewCell.self, forCellReuseIdentifier: "ButtonCell")
         self.layer.cornerRadius = 16
         self.isScrollEnabled = false
-        self.backgroundColor = .ypBackground2
+        self.backgroundColor = .ypBackgroundGray
         self.separatorStyle = .none
     }
     
@@ -58,7 +58,7 @@ extension ButtonsTableView: UITableViewDataSource {
         cell.detailTextLabel?.textColor = .ypGray
         cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 17)
         cell.accessoryType = .disclosureIndicator
-        cell.backgroundColor = .ypBackground2
+        cell.backgroundColor = .ypBackgroundGray
         
         return cell
     }

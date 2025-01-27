@@ -11,8 +11,8 @@ extension UIButton {
     public static func primaryButton(_ title: String) -> UIButton {
         let primaryButton = UIButton(type: .system)
         primaryButton.setTitle(title, for: .normal)
-        primaryButton.setTitleColor(.white, for: .normal)
-        primaryButton.backgroundColor = UIColor.black
+        primaryButton.setTitleColor(.ypTextLight, for: .normal)
+        primaryButton.backgroundColor = .ypBackgroundDark
         primaryButton.layer.cornerRadius = 16
         primaryButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         primaryButton.translatesAutoresizingMaskIntoConstraints = false

@@ -7,13 +7,13 @@
 
 import UIKit
 
-protocol TrackerScheduleDelegate {
+protocol TrackerScheduleDelegate: AnyObject {
     func save(weekDays: Set<DayOfWeek>)
 }
 
 final class TrackerScheduleViewController: UIViewController {
     
-    var delegate: TrackerScheduleDelegate?
+    weak var delegate: TrackerScheduleDelegate?
     
     var weekDays: Set<DayOfWeek> = []
     
@@ -23,7 +23,7 @@ final class TrackerScheduleViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .ypBackground
+        view.backgroundColor = .ypBackgroundLight
         navigationItem.hidesBackButton = true
         navigationItem.title = "Расписание"
         

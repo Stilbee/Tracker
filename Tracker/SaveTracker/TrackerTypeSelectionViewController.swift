@@ -18,7 +18,7 @@ final class TrackerTypeSelectionViewController: UIViewController {
     }
     
     private func setupViews() {
-        view.backgroundColor = .ypBackground
+        view.backgroundColor = .ypBackgroundLight
         navigationItem.title = "Создание трекера"
         
         let stackView = UIStackView()

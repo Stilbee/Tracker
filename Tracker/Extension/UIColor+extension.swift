@@ -35,4 +35,23 @@ extension UIColor {
             self.init(red: 0, green: 0, blue: 0, alpha: 0)
         }
     }
+    
+    func rgbaComponents() -> (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat)? {
+            var r: CGFloat = 0
+            var g: CGFloat = 0
+            var b: CGFloat = 0
+            var a: CGFloat = 0
+            guard self.getRed(&r, green: &g, blue: &b, alpha: &a) else {
+                return nil
+            }
+            return (r, g, b, a)
+        }
+
+        func isEqualToColor(_ color: UIColor) -> Bool {
+            guard let c1 = self.rgbaComponents(),
+                  let c2 = color.rgbaComponents() else {
+                return false
+            }
+            return c1.r == c2.r && c1.g == c2.g && c1.b == c2.b && c1.a == c2.a
+        }
 }
