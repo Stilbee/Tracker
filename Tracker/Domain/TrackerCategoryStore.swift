@@ -47,10 +47,9 @@ final class TrackerCategoryStore: NSObject {
     
     var trackerCategories: [TrackerCategory] {
         guard
-            let objects = self.fetchedResultsController.fetchedObjects,
-            let categories = try? objects.map({ try self.trackerCategory(from: $0)})
+            let objects = self.fetchedResultsController.fetchedObjects
         else { return [] }
-        return categories
+        return objects.map({ self.trackerCategory(from: $0)})
     }
     
     convenience override init() {
@@ -71,29 +70,62 @@ final class TrackerCategoryStore: NSObject {
     func addNewCategory(_ category: TrackerCategory) throws {
         let trackerCategoryCoreData = TrackerCategoryCoreData(context: context)
         trackerCategoryCoreData.name = category.name
-        trackerCategoryCoreData.trackers = []
+        trackerCategoryCoreData.trackers = category.trackers.compactMap {
+            $0.id
+        }
         try context.save()
     }
     
-    func trackerCategory(from trackerCategoryCoreData: TrackerCategoryCoreData) throws -> TrackerCategory {
+    func addTrackerToCategory(to category: TrackerCategory?, tracker: Tracker) throws {
+        guard let fromDb = self.fetchTrackerCategory(with: category) else {
+            fatalError()
+        }
+        fromDb.trackers = trackerCategories.first {
+            $0.name == fromDb.name
+        }?.trackers.map { $0.id }
+        fromDb.trackers?.append(tracker.id)
+        try context.save()
+    }
+    
+    func remove(from category: TrackerCategory?, tracker: Tracker) throws {
+        guard let fromDb = self.fetchTrackerCategory(with: category) else {
+            fatalError()
+        }
+        fromDb.trackers = fromDb.trackers?.filter({$0 != tracker.id}) ?? []
+        try context.save()
+    }
+    
+    func deleteCategory(_ category: TrackerCategory?) throws {
+        let toDelete = fetchTrackerCategory(with: category)
+        guard let toDelete = toDelete else { return }
+        context.delete(toDelete)
+        try context.save()
+    }
+    
+    func trackerCategory(from trackerCategoryCoreData: TrackerCategoryCoreData) -> TrackerCategory {
         guard let name = trackerCategoryCoreData.name,
               let trackers = trackerCategoryCoreData.trackers
         else {
-            throw TrackerError.defaultError
+            fatalError()
         }
-        return TrackerCategory(name: name,
-                               trackers: trackerStore.trackers)
+        return TrackerCategory(name: name, trackers: trackerStore
+            .trackers
+            .filter { trackers.contains($0.id) })
     }
     
-    func fetchTrackerCategory(with trackerCategory: TrackerCategory?) throws -> TrackerCategoryCoreData? {
-        guard let trackerCategory = trackerCategory else { throw fatalError() }
+    func fetchTrackerCategory(with trackerCategory: TrackerCategory?) -> TrackerCategoryCoreData? {
+        guard let trackerCategory = trackerCategory else { fatalError() }
         let fetchRequest: NSFetchRequest<TrackerCategoryCoreData> = TrackerCategoryCoreData.fetchRequest()
         fetchRequest.predicate = NSPredicate(
             format: "name == %@",
             trackerCategory.name as CVarArg
         )
-        let result = try context.fetch(fetchRequest)
-        return result.first
+        do {
+            let result = try context.fetch(fetchRequest)
+            return result.first
+        } catch {
+            return nil
+        }
     }
 }
 

@@ -23,7 +23,7 @@ final class AddTrackerCategoryViewController: UIViewController {
     
 
     override func viewDidLoad() {
-        view.backgroundColor = .ypBackground
+        view.backgroundColor = .ypBackgroundLight
         navigationItem.hidesBackButton = true
         navigationItem.title = categoryToEdit != nil ? "Редактировать категорию" : "Новая категория"
         

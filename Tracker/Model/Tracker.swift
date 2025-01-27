@@ -17,7 +17,7 @@ struct Tracker {
     let pinned: Bool
 }
 
-enum DayOfWeek: Int, CaseIterable, Codable {
+public enum DayOfWeek: Int, CaseIterable, Codable {
     case monday = 1
     case tuesday = 2
     case wednesday = 3

@@ -55,7 +55,7 @@ final class TrackerCell: UICollectionViewCell {
         
         daysLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         daysLabel.numberOfLines = 1
-        daysLabel.textColor = .black
+        daysLabel.textColor = .ypText
         daysLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(daysLabel)
         
@@ -112,16 +112,16 @@ final class TrackerCell: UICollectionViewCell {
         let lastDigit = days % 10
         let lastTwoDigits = days % 100
         if lastTwoDigits >= 11 && lastTwoDigits <= 19 {
-            return "\(days) дней"
+            return "\(days) \(NSLocalizedString("days.title", comment: ""))"
         }
         
         switch lastDigit {
         case 1:
-            return "\(days) день"
+            return "\(days) \(NSLocalizedString("day.title", comment: ""))"
         case 2, 3, 4:
-            return "\(days) дня"
+            return "\(days) \(NSLocalizedString("day.genetive.title", comment: ""))"
         default:
-            return "\(days) дней"
+            return "\(days) \(NSLocalizedString("days.title", comment: ""))"
         }
     }
     

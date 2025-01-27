@@ -9,11 +9,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Трекеры-->
+        <!--Trackers-->
         <scene sceneID="IMT-7b-MaJ">
             <objects>
                 <navigationController id="KGR-bB-MxG" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Трекеры" image="nav-trackers" id="33V-1x-Fs2"/>
+                    <tabBarItem key="tabBarItem" title="Trackers" image="nav-trackers" id="33V-1x-Fs2"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Yvk-Ra-S4X">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -52,17 +52,17 @@
             </objects>
             <point key="canvasLocation" x="421" y="296"/>
         </scene>
-        <!--Статистика-->
+        <!--Statistics-->
         <scene sceneID="r4l-km-Xyw">
             <objects>
-                <viewController id="aJa-Jp-GSL" sceneMemberID="viewController">
+                <viewController id="aJa-Jp-GSL" customClass="StatisticViewController" customModule="Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="q97-1I-NhY">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="qzY-Ty-huV"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Статистика" image="nav-statistic" id="y7j-HP-6zL"/>
+                    <tabBarItem key="tabBarItem" title="Statistics" image="nav-statistic" id="y7j-HP-6zL"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2tT-Zl-gLy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -8,13 +8,16 @@
 
 import UIKit
 
-protocol SaveTrackerViewControllerDelegate {
+protocol SaveTrackerViewControllerDelegate: AnyObject {
     func appendTracker(tracker: Tracker, category: String?)
     func updateTracker(tracker: Tracker, oldTracker: Tracker?, category: String?)
     func reload()
 }
 
 final class SaveTrackerViewController: UIViewController {
+    
+    weak var delegate: SaveTrackerViewControllerDelegate?
+    
     private let emojis = ["🙂","😻","🌺","🐶","❤️","😱","😇","😡","🥶","🤔","🙌","🍔","🥦","🏓","🥇","🎸","🏝","😪"]
     private let colors: [UIColor] =
     [.trackerColor1, .trackerColor2, .trackerColor3, .trackerColor4, .trackerColor5, .trackerColor6, .trackerColor7, .trackerColor8, .trackerColor9, .trackerColor10, .trackerColor11, .trackerColor12, .trackerColor13, .trackerColor14, .trackerColor15, .trackerColor16, .trackerColor17, .trackerColor18]
@@ -22,9 +25,7 @@ final class SaveTrackerViewController: UIViewController {
     private let saveButton = PrimaryButton(title: "Создать")
     private let nameMaxLengthErrorLabel = UILabel()
     private let nameTextField = UITextField.primary("Введите название трекера")
-    private let trackerCategoryViewController = TrackerCategoryViewController()
     private(set) var viewModel = TrackerCategoryViewModel.shared
-    private var updatedTracker: Tracker?
     private var buttonsTableView = ButtonsTableView(items: [])
     
     private var selectedColorIndex: Int?
@@ -34,8 +35,11 @@ final class SaveTrackerViewController: UIViewController {
     private lazy var nameMaxLengthErrorLabelHideConstraint = nameMaxLengthErrorLabel.heightAnchor.constraint(equalToConstant: 0)
     private lazy var nameMaxLengthErrorLabelShowConstraint = nameMaxLengthErrorLabel.heightAnchor.constraint(equalToConstant: 38)
 
-    var delegate: SaveTrackerViewControllerDelegate?
+    var oldSelectedCategory: TrackerCategory? = nil
+    var selectedCategory: TrackerCategory? = nil
+    var editingTracker: Tracker? = nil
     var isRegular: Bool = true
+    var isEdit: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,9 +47,8 @@ final class SaveTrackerViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .ypBackground
+        view.backgroundColor = .ypBackgroundLight
         navigationItem.hidesBackButton = true
-        navigationItem.title = "Новая привычка"
         
         if (isRegular) {
             buttonsTableView = ButtonsTableView(items: [
@@ -80,10 +83,9 @@ final class SaveTrackerViewController: UIViewController {
                 return
             }
             if (selectedIndex == 0) {
-                self.trackerCategoryViewController.viewModel.onSelectCategory = { category in
-                    self.buttonsTableView.updateSubtitle(index: selectedIndex, subtitle: category.name)
-                }
-                self.navigationController?.pushViewController(self.trackerCategoryViewController, animated: true)
+                let trackerCategoryVC = TrackerCategoryViewController()
+                trackerCategoryVC.delegate = self
+                self.navigationController?.pushViewController(trackerCategoryVC, animated: true)
             }
             else {
                 let trackerScheduleVC = TrackerScheduleViewController()
@@ -96,8 +98,7 @@ final class SaveTrackerViewController: UIViewController {
         scrollView.addSubview(buttonsTableView)
         
         let emojisLabel = sectionTitleLabel("Emoji")
-        
-        let emojisCollectionView = SelectItemCollectionView(items: emojis)
+        let emojisCollectionView = SelectItemCollectionView(items: emojis, selectedIndex: selectedEmojiIndex)
         emojisCollectionView.onItemSelected = { [weak self] index in
             self?.selectedEmojiIndex = index
         }
@@ -106,7 +107,7 @@ final class SaveTrackerViewController: UIViewController {
         scrollView.addSubview(emojisCollectionView)
         
         let colorsLabel = sectionTitleLabel("Цвет")
-        let colorsCollectionView = SelectItemCollectionView(items: colors)
+        let colorsCollectionView = SelectItemCollectionView(items: colors, selectedIndex: selectedColorIndex)
         colorsCollectionView.onItemSelected = { [weak self] index in
             self?.selectedColorIndex = index
         }
@@ -129,6 +130,17 @@ final class SaveTrackerViewController: UIViewController {
         actionButtonsStackView.addArrangedSubview(saveButton)
         
         scrollView.addSubview(actionButtonsStackView)
+        
+        if (isEdit) {
+            buttonsTableView.updateSubtitle(index: 0, subtitle: selectedCategory?.name ?? "")
+            navigationItem.title = "Редактирование привычки"
+            saveButton.setTitle("Сохранить", for: .normal)
+            if (isRegular) {
+                save(weekDays: editingTracker?.schedule ?? [])
+            }
+        } else {
+            navigationItem.title = "Новая привычка"
+        }
         
         let mainLayout = scrollView.contentLayoutGuide
         NSLayoutConstraint.activate([
@@ -194,18 +206,19 @@ final class SaveTrackerViewController: UIViewController {
             return
         }
         
-        let newTracker = Tracker(id: UUID(),
+        let newTracker = Tracker(id: editingTracker?.id ?? UUID(),
                                  name: text,
                                  color: colors[colorIndex],
                                  emoji: emojis[emojiIndex],
                                  schedule: selectedDays,
                                  pinned: false)
-        if updatedTracker != nil {
-            delegate?.updateTracker(tracker: newTracker, oldTracker: updatedTracker, category: viewModel.selectedCategory?.name)
+        if isEdit, let editingTracker = editingTracker {
+            viewModel.removeTrackerFromCategory(of: oldSelectedCategory, tracker: editingTracker)
+            delegate?.updateTracker(tracker: newTracker, oldTracker: editingTracker, category: selectedCategory?.name)
         } else {
-            delegate?.appendTracker(tracker: newTracker, category: viewModel.selectedCategory?.name)
-            viewModel.addTrackerToCategory(to: viewModel.selectedCategory, tracker: newTracker)
+            delegate?.appendTracker(tracker: newTracker, category: selectedCategory?.name)
         }
+        viewModel.addTrackerToCategory(to: selectedCategory, tracker: newTracker)
         delegate?.reload()
         self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
     }
@@ -233,6 +246,22 @@ final class SaveTrackerViewController: UIViewController {
         nameMaxLengthErrorLabelShowConstraint.isActive = false
         nameMaxLengthErrorLabelHideConstraint.isActive = true
     }
+    
+    public func edit(tracker: Tracker, category: TrackerCategory?) {
+        isEdit = true
+        editingTracker = tracker
+        nameTextField.text = tracker.name
+        selectedDays = tracker.schedule ?? []
+        isRegular = tracker.schedule != nil
+        selectedCategory = category
+        oldSelectedCategory = category
+        if let selectedEmoji = editingTracker?.emoji {
+            selectedEmojiIndex = emojis.firstIndex(of: selectedEmoji)
+        }
+        if let selectedColor = editingTracker?.color {
+            selectedColorIndex = colors.firstIndex(where: { $0.isEqualToColor(selectedColor) })
+        }
+    }
 }
 
 extension SaveTrackerViewController: TrackerScheduleDelegate {
@@ -257,5 +286,12 @@ extension SaveTrackerViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+}
+
+extension SaveTrackerViewController: TrackerCategoryDelegate {
+    func onSelect(category: TrackerCategory) {
+        selectedCategory = category
+        buttonsTableView.updateSubtitle(index: 0, subtitle: category.name)
     }
 }

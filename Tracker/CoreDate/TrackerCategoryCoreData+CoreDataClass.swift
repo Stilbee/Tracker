@@ -16,7 +16,7 @@ public class TrackerCategoryCoreData: NSManagedObject, Identifiable {
     }
 
     @NSManaged public var name: String?
-    @NSManaged public var trackers: Set<TrackerCoreData>?
+    @NSManaged public var trackers: [UUID]?
 
     @objc(addTrackersObject:)
     @NSManaged public func addToTrackers(_ value: TrackerCoreData)

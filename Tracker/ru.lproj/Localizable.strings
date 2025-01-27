@@ -1,0 +1,18 @@
+/*
+  Localizable.strings
+  Tracker
+
+  Created by Alibi Mailan on 27.01.2025.
+  
+*/
+
+trackers.title = "Трекеры";
+filter.title = "Фильтры";
+filter.allTrackers = "Все трекеры";
+filter.trackersToday = "Трекеры на сегодня";
+filter.completedTrackers = "Завершенные";
+filter.uncompletedTrackers = "Не завершенные";
+search.placeholder = "Поиск";
+day.title = "день";
+day.genetive.title = "дня";
+days.title = "дней";

@@ -31,7 +31,7 @@ final class SwitchTableViewCell: UITableViewCell {
         
         daySwitch.addTarget(self, action: #selector(switchToggled), for: .valueChanged)
         daySwitch.translatesAutoresizingMaskIntoConstraints = false
-        daySwitch.onTintColor = .ypSwitcher
+        daySwitch.onTintColor = .ypBlue
         contentView.addSubview(daySwitch)
         
         NSLayoutConstraint.activate([

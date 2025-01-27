@@ -14,7 +14,7 @@ extension UITextField {
         textField.font = UIFont.systemFont(ofSize: 17)
         textField.borderStyle = .none
         textField.clearButtonMode = .whileEditing
-        textField.backgroundColor = .ypBackground2
+        textField.backgroundColor = .ypBackgroundGray
         textField.layer.cornerRadius = 16
         textField.clearButtonMode = .whileEditing
         textField.translatesAutoresizingMaskIntoConstraints = false

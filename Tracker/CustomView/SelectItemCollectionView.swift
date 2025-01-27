@@ -15,7 +15,7 @@ final class SelectItemCollectionView: UICollectionView, UICollectionViewDelegate
     
     private var selectedIndex: Int?
     
-    init(items: [Any], cellSize: CGSize = CGSize(width: 52, height: 52)) {
+    init(items: [Any], selectedIndex: Int?, cellSize: CGSize = CGSize(width: 52, height: 52)) {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 5
@@ -24,6 +24,7 @@ final class SelectItemCollectionView: UICollectionView, UICollectionViewDelegate
         
         super.init(frame: .zero, collectionViewLayout: layout)
         self.items = items
+        self.selectedIndex = selectedIndex
         setupUI()
     }
     
