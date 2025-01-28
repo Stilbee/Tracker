@@ -53,6 +53,7 @@ final class TrackersViewController: UICollectionViewController, UISearchResultsU
         super.viewDidLoad()
         setupStore()
         setupViews()
+        dateChanged(datePicker)
     }
     
     private func setupStore() {
@@ -133,6 +134,8 @@ final class TrackersViewController: UICollectionViewController, UISearchResultsU
         searchController.searchBar.placeholder = NSLocalizedString("search.placeholder", comment: "")
         searchController.searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchController.isActive = true
+        searchController.searchBar.tintColor = .ypBackgroundDark
+        searchController.searchBar.delegate = self
         definesPresentationContext = true
         
         navigationItem.searchController = searchController
@@ -160,7 +163,9 @@ final class TrackersViewController: UICollectionViewController, UISearchResultsU
     
     @objc private func dateChanged(_ sender: UIDatePicker) {
         currentDate = sender.date
-        filterTrackers(forToday: false)
+        let calendar = Calendar.current
+        selectedDay = calendar.component(.weekday, from: currentDate)
+        filterTrackers()
     }
     
     @objc private func filtersButtonTapped() {
@@ -212,13 +217,13 @@ final class TrackersViewController: UICollectionViewController, UISearchResultsU
         collectionView.reloadData()
     }
     
-    private func filterTrackers(forToday: Bool = false) {
-        filterVisibleCategories(forToday: forToday)
+    private func filterTrackers() {
+        filterVisibleCategories()
         showVisibleViews()
         collectionView.reloadData()
     }
     
-    private func filterVisibleCategories(forToday: Bool = false) {
+    private func filterVisibleCategories() {
         visibleCategories = categories.map { category in
             if category.name == "Закрепленные" {
                 let filteredTrackers = pinnedTrackers.filter { tracker in
@@ -229,14 +234,12 @@ final class TrackersViewController: UICollectionViewController, UISearchResultsU
                 let filteredTrackers = trackers.filter { tracker in
                     let categoriesContains = category.trackers.contains { $0.id == tracker.id }
                     let pinnedContains = pinnedTrackers.contains{ $0.id == tracker.id }
-                    let titleContains = tracker.name.contains(self.filterText ?? "") || (self.filterText ?? "").isEmpty
-                    var scheduleContains = true
-                    if (forToday) {
-                        scheduleContains = tracker.schedule?.contains(where: { dayOfWeek in
-                            guard let currentDate = self.selectedDay else { return true }
-                            return dayOfWeek.rawValue == currentDate
-                        }) ?? false
-                    }
+                    let titleContains = (self.filterText ?? "").isEmpty
+                        || tracker.name.localizedCaseInsensitiveContains(self.filterText ?? "")
+                    let scheduleContains = tracker.schedule?.contains(where: { dayOfWeek in
+                        guard let currentDate = self.selectedDay else { return true }
+                        return dayOfWeek.rawValue == currentDate
+                    }) ?? true
                     return scheduleContains && titleContains && categoriesContains && !pinnedContains
                 }
                 return TrackerCategory(name: category.name, trackers: filteredTrackers)
@@ -327,8 +330,7 @@ extension TrackersViewController: TrackerStoreDelegate {
         let fromDatabase = trackerStore.trackers
         trackers = fromDatabase.filter { !$0.pinned }
         pinnedTrackers = fromDatabase.filter { $0.pinned }
-        filterVisibleCategories()
-        collectionView.reloadData()
+        filterTrackers()
     }
 }
 
@@ -413,8 +415,7 @@ extension TrackersViewController {
 extension TrackersViewController: FilterViewControllerDelegate {
     func allTrackers() {
         trackers = trackerStore.trackers
-        filterVisibleCategories(forToday: false)
-        collectionView.reloadData()
+        filterTrackers()
     }
     
     func trackersToday() {
@@ -424,22 +425,31 @@ extension TrackersViewController: FilterViewControllerDelegate {
             $0.schedule?.contains(where: { $0.rawValue ==  weekday}) ?? false
         }
         
-        filterVisibleCategories()
-        collectionView.reloadData()
+        filterTrackers()
     }
     
     func completedTrackersToday() {
         analytics.report("click", params: ["target": "completeTracker"])
         trackers = trackerStore.trackers.filter { isTrackerCompletedToday(id: $0.id) }
         
-        filterVisibleCategories()
-        collectionView.reloadData()
+        filterTrackers()
     }
         
     func unCompletedTrackersToday() {
         analytics.report("click", params: ["target": "uncompleteTracker"])
         trackers = trackerStore.trackers.filter { !isTrackerCompletedToday(id: $0.id) }
-        filterVisibleCategories()
-        collectionView.reloadData()
+        filterTrackers()
+    }
+}
+
+extension TrackersViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filterText = searchText
+        filterTrackers()
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        filterText = searchBar.text
+        filterTrackers()
     }
 }

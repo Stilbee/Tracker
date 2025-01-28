@@ -83,14 +83,11 @@ final class TrackerCategoryViewController: UIViewController {
     
     private func checkEmptyCategoriesScreen() {
         if viewModel.categories.isEmpty {
-            categoriesTableView?.isHidden = true
-            emptyCategoryLogo.isHidden = false
-            emptyCategoryText.isHidden = false
+            categoriesTableView?.setEmptyMessage("Привычки и события можно объединить по смыслу?", UIImage(named: "il-error-1") ?? UIImage())
         } else {
-            categoriesTableView?.isHidden = false
-            emptyCategoryLogo.isHidden = true
-            emptyCategoryText.isHidden = true
+            categoriesTableView?.restoreBackgroundView()
         }
+        categoriesTableView?.reloadData()
     }
     
     @objc private func addCategoryTapped() {

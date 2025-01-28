@@ -127,6 +127,7 @@ private extension OnboardingViewController {
     }
     
     @objc func buttonTapped() {
+        UserDefaults.standard.set(true, forKey: "hasSeenOnboarding")
         let tabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBarController")
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
         window.rootViewController = tabBarController

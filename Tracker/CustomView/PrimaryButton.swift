@@ -31,11 +31,11 @@ final class PrimaryButton: UIButton {
     
     public func disable() {
         isEnabled = false
-        backgroundColor = UIColor(hex: "#AEAFB4")
+        backgroundColor = .ypGray
     }
     
     public func enable() {
         isEnabled = true
-        backgroundColor = .black
+        backgroundColor = .ypBackgroundDark
     }
 }

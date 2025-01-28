@@ -47,6 +47,8 @@ final class AddTrackerCategoryViewController: UIViewController {
             doneButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             doneButton.heightAnchor.constraint(equalToConstant: 60)
         ])
+        
+        nameDidChange(categoryNameField)
     }
     
     func editCategory(_ category: TrackerCategory, newHeader: String) {
@@ -69,11 +71,9 @@ final class AddTrackerCategoryViewController: UIViewController {
     
     @objc private func nameDidChange(_ textField: UITextField) {
         if textField.text?.isEmpty ?? false {
-            doneButton.isEnabled = false
-            doneButton.backgroundColor = .gray
+            doneButton.disable()
         } else {
-            doneButton.isEnabled = true
-            doneButton.backgroundColor = .black
+            doneButton.enable()
         }
     }
 }

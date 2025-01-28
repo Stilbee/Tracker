@@ -23,7 +23,7 @@ final class FilterViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = NSLocalizedString("filters.title", comment: "")
+        label.text = NSLocalizedString("filter.title", comment: "")
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         label.textColor = .ypText
         label.backgroundColor = .ypBackgroundLight

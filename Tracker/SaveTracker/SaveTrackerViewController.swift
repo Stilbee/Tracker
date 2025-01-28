@@ -44,6 +44,7 @@ final class SaveTrackerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        checkButtonShouldBeEnabled()
     }
     
     private func setupUI() {
@@ -101,6 +102,7 @@ final class SaveTrackerViewController: UIViewController {
         let emojisCollectionView = SelectItemCollectionView(items: emojis, selectedIndex: selectedEmojiIndex)
         emojisCollectionView.onItemSelected = { [weak self] index in
             self?.selectedEmojiIndex = index
+            self?.checkButtonShouldBeEnabled()
         }
         emojisCollectionView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(emojisLabel)
@@ -110,6 +112,7 @@ final class SaveTrackerViewController: UIViewController {
         let colorsCollectionView = SelectItemCollectionView(items: colors, selectedIndex: selectedColorIndex)
         colorsCollectionView.onItemSelected = { [weak self] index in
             self?.selectedColorIndex = index
+            self?.checkButtonShouldBeEnabled()
         }
         colorsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(colorsLabel)
@@ -235,6 +238,7 @@ final class SaveTrackerViewController: UIViewController {
         } else {
             hideNameMaxLengthErrorLabel()
         }
+        checkButtonShouldBeEnabled()
     }
     
     private func showNameMaxLengthErrorLabel() {
@@ -260,6 +264,17 @@ final class SaveTrackerViewController: UIViewController {
         }
         if let selectedColor = editingTracker?.color {
             selectedColorIndex = colors.firstIndex(where: { $0.isEqualToColor(selectedColor) })
+        }
+    }
+    
+    public func checkButtonShouldBeEnabled() {
+        if nameTextField.text == nil || nameTextField.text?.isEmpty == true
+              || (nameTextField.text?.count ?? 0) > 38
+              || selectedEmojiIndex == nil
+              || selectedColorIndex == nil {
+            saveButton.disable()
+        } else {
+            saveButton.enable()
         }
     }
 }
@@ -293,5 +308,6 @@ extension SaveTrackerViewController: TrackerCategoryDelegate {
     func onSelect(category: TrackerCategory) {
         selectedCategory = category
         buttonsTableView.updateSubtitle(index: 0, subtitle: category.name)
+        checkButtonShouldBeEnabled()
     }
 }
