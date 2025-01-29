@@ -48,7 +48,6 @@ final class SwitchesTableView: UITableView, UITableViewDelegate, UITableViewData
         }
         
         cell.configure(with: items[indexPath.row], isOn: switchStates[indexPath.row])
-        cell.backgroundColor = .ypBackgroundGray
         cell.selectionStyle = .none
         cell.onSwitchToggle = { [weak self] isOn in
             self?.switchStates[indexPath.row] = isOn

@@ -97,12 +97,12 @@ final class TrackerStore: NSObject {
         guard let id = trackerCoreData.id,
               let emoji = trackerCoreData.emoji,
               let color = uiColorMarshalling.color(from: trackerCoreData.color ?? ""),
-              let name = trackerCoreData.name,
-              let schedule = trackerCoreData.schedule
+              let name = trackerCoreData.name
         else {
             fatalError()
         }
-        return Tracker(id: id, name: name, color: color, emoji: emoji, schedule: Set(schedule.compactMap({ DayOfWeek(rawValue: $0)})), pinned: pinned)
+        return Tracker(id: id, name: name, color: color, emoji: emoji,
+                       schedule: trackerCoreData.schedule == nil ? nil : Set(trackerCoreData.schedule!.compactMap({ DayOfWeek(rawValue: $0)})), pinned: pinned)
     }
     
     func pinTracker(_ tracker: Tracker?, value: Bool) throws {

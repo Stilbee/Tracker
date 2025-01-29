@@ -30,7 +30,7 @@ final class SaveTrackerViewController: UIViewController {
     
     private var selectedColorIndex: Int?
     private var selectedEmojiIndex: Int?
-    private var selectedDays: Set<DayOfWeek> = []
+    private var selectedDays: Set<DayOfWeek>? = nil
     
     private lazy var nameMaxLengthErrorLabelHideConstraint = nameMaxLengthErrorLabel.heightAnchor.constraint(equalToConstant: 0)
     private lazy var nameMaxLengthErrorLabelShowConstraint = nameMaxLengthErrorLabel.heightAnchor.constraint(equalToConstant: 38)
@@ -204,7 +204,8 @@ final class SaveTrackerViewController: UIViewController {
     @objc private func onClickSave() {
         guard let text = nameTextField.text, !text.isEmpty,
               let emojiIndex = selectedEmojiIndex,
-              let colorIndex = selectedColorIndex
+              let colorIndex = selectedColorIndex,
+              !(isRegular && (selectedDays == nil || selectedDays?.isEmpty == true))
         else {
             return
         }
@@ -213,7 +214,7 @@ final class SaveTrackerViewController: UIViewController {
                                  name: text,
                                  color: colors[colorIndex],
                                  emoji: emojis[emojiIndex],
-                                 schedule: selectedDays,
+                                 schedule: isRegular ? selectedDays : nil,
                                  pinned: false)
         if isEdit, let editingTracker = editingTracker {
             viewModel.removeTrackerFromCategory(of: oldSelectedCategory, tracker: editingTracker)
@@ -271,7 +272,8 @@ final class SaveTrackerViewController: UIViewController {
         if nameTextField.text == nil || nameTextField.text?.isEmpty == true
               || (nameTextField.text?.count ?? 0) > 38
               || selectedEmojiIndex == nil
-              || selectedColorIndex == nil {
+              || selectedColorIndex == nil
+              || isRegular && (selectedDays == nil || selectedDays?.isEmpty == true) {
             saveButton.disable()
         } else {
             saveButton.enable()
@@ -285,7 +287,7 @@ extension SaveTrackerViewController: TrackerScheduleDelegate {
         
         var subtitle = ""
         
-        if !selectedDays.isEmpty {
+        if let selectedDays = selectedDays, !selectedDays.isEmpty {
             if selectedDays.count == 7 {
                 subtitle = "Каждый день"
             } else {
@@ -294,6 +296,7 @@ extension SaveTrackerViewController: TrackerScheduleDelegate {
         }
         
         buttonsTableView.updateSubtitle(index: 1, subtitle: subtitle)
+        checkButtonShouldBeEnabled()
     }
 }
 

@@ -77,6 +77,7 @@ final class FilterViewController: UIViewController {
     }
 }
 
+// MARK: UITableViewDelegate
 extension FilterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    heightForRowAt indexPath: IndexPath) -> CGFloat {

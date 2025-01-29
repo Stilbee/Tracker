@@ -25,6 +25,8 @@ final class SwitchTableViewCell: UITableViewCell {
     }
     
     private func setupUI() {
+        backgroundColor = .ypBackgroundGray
+        
         dayLabel.font = UIFont.systemFont(ofSize: 17)
         dayLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(dayLabel)
