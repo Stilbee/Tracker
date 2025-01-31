@@ -164,7 +164,8 @@ final class TrackersViewController: UICollectionViewController, UISearchResultsU
     @objc private func dateChanged(_ sender: UIDatePicker) {
         currentDate = sender.date
         let calendar = Calendar.current
-        selectedDay = calendar.component(.weekday, from: currentDate)
+        let weekday = calendar.component(.weekday, from: currentDate)
+        selectedDay = (weekday + 5) % 7 + 1
         filterTrackers()
     }
     
